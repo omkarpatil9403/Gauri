@@ -1,0 +1,35 @@
+Put ALL your real photo and video files in this folder — no renaming
+needed. Then tell index.html what they're called.
+
+STEP 1 — copy your files here
+Just drag every photo/video into this "images" folder, keeping their
+original names (IMG-20260809-WA0040.jpeg, VID-20260809-WA0044.mp4, etc).
+
+STEP 2 — get the exact filename list
+Open this folder, then:
+
+  Windows (PowerShell):
+    1. In File Explorer, click into the images folder's address bar,
+       type "powershell" and press Enter — this opens a terminal
+       already inside the folder.
+    2. Run this command:
+       Get-ChildItem -File | Where-Object { $_.Name -ne 'PUT_YOUR_PHOTOS_HERE.txt' } | ForEach-Object { "  '" + $_.Name + "'," } | Set-Clipboard
+    3. The list is now copied to your clipboard.
+
+  Mac (Terminal):
+    1. Open Terminal, then "cd" into the images folder
+       (drag the folder onto the Terminal window after typing cd ).
+    2. Run this command:
+       for f in *; do [ "$f" != "PUT_YOUR_PHOTOS_HERE.txt" ] && printf "  '%s',\n" "$f"; done | pbcopy
+    3. The list is now copied to your clipboard.
+
+STEP 3 — paste it into index.html
+Open index.html in a text editor, search for:
+  const MEDIA_FILES = [
+Paste your copied list between the [ and ], replacing the 3 example
+lines that start with //. Save the file — that's it. Photos and videos
+can be in any order in the list; it tells them apart automatically by
+file extension (.jpg/.jpeg/.png/.webp = photo, .mp4/.mov/.webm = video).
+
+Any filename in the list that doesn't match an actual file just shows a
+numbered placeholder instead of breaking the page.
